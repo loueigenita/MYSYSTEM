@@ -18,8 +18,7 @@ class UserController extends Controller
     public function index()
 
     {
-        $users = User::all();
-        $users = User::paginate(10);
+        $users = User::orderBy('created_at', 'desc')->paginate(5);
         return view('user.index', compact('users'))->render();
     }
 
@@ -49,6 +48,7 @@ class UserController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users|max:255',
+            'gender' => 'required',
             'password' => 'required|min:8|max:255',
         ]);
 
@@ -56,6 +56,7 @@ class UserController extends Controller
         $user = User::create([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
+            'gender' => $validatedData['gender'],
             'password' => Hash::make($validatedData['password']),
         ]);
 
@@ -96,10 +97,11 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
 {
-    $user = User::findOrFail($id);
+    $user = User::find($id);
     $validatedData = $request->validate([
         'name' => 'required|max:255',
         'email' => 'required|email|max:255|unique:users,email,'.$user->id,
+        'gender' => 'required',
         'password' => 'nullable|min:8|max:255',
     ]);
     
@@ -107,6 +109,7 @@ class UserController extends Controller
     $user->update([
         'name' => $validatedData['name'],
         'email' => $validatedData['email'],
+        'gender' => $validatedData['gender'],
         'password' => $validatedData['password'] ? Hash::make($validatedData['password']) : $user->password,
     ]);
     
@@ -128,5 +131,15 @@ class UserController extends Controller
 
         Alert::toast('Deleted Successfully', 'success')->autoClose(3000)->timerProgressBar()->width('20rem')->padding('1.5rem');
         return redirect()->back();
+    }
+    public function deleteSelected(Request $request)
+    {
+
+    $id = $request->input('selected_users');
+
+    if(!empty($id)){
+        User::whereIn('id', $id)->delete();
+    }
+    return redirect()->back();
     }
 }

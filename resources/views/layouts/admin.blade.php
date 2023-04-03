@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="{{asset('adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('adminlte/dist/css/adminlte.min.css')}}">
+
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="{{asset('adminlte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
   <!-- Daterange picker -->
@@ -25,14 +26,34 @@
   <link rel="stylesheet" href="{{ asset('vendor/sweetalert2/sweetalert2.min.css') }}">
   <script src="{{ asset('vendor/sweetalert2/sweetalert2.all.min.js') }}"></script>
 
+  <link rel="stylesheet" href="{{asset('css/loader.css')}}">
+  
+
 
 
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
   <div class="wrapper">
+{{--   
+    <div class="pl">
+      <div class="pl__dot"></div>
+      <div class="pl__dot"></div>
+      <div class="pl__dot"></div>
+      <div class="pl__dot"></div>
+      <div class="pl__dot"></div>
+      <div class="pl__dot"></div>
+      <div class="pl__dot"></div>
+      <div class="pl__dot"></div>
+      <div class="pl__dot"></div>
+      <div class="pl__dot"></div>
+      <div class="pl__dot"></div>
+      <div class="pl__dot"></div>
+      <div class="pl__text">Loading…</div>
+    </div> --}}
+
     @include('layouts.partials.nav')
-    
+
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
       <a href="/" class="brand-link">
@@ -50,12 +71,8 @@
       <div class="content-wrapper">
         @include('sweetalert::alert')
         @yield('content')
-
        
       </div>
-
-   
-
     <footer class="main-footer">
       @include('layouts.partials.footer')
     </footer>
@@ -68,6 +85,9 @@
 
   
 </body>
+<script src="{{asset('js/password.js')}}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" ></script>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -94,4 +114,5 @@
 <script src="{{asset('adminlte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('adminlte/dist/js/adminlte.js')}}"></script>
+
 </html>

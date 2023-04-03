@@ -6,12 +6,12 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    
     public function index()
     {
         $users = User::get();
-        return view('dashboard', [
-            'users' => $users
+        return view('Dashboard', [
+            
+            'users' => $users,
         ]);
     }
 }

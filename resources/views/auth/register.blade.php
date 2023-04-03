@@ -1,61 +1,13 @@
-
-{{-- <link href="{{asset('css/auth/register.css')}}" rel="stylesheet">
-
-<div class="register">
-    
-    <form method="POST" action="{{ route('register') }}"  class="form">
-        @csrf
-
-        <span class="title">REGISTER</span>
-
-        <img class="avatar" for="file" src="../images/logo.png" alt="image">
-
-        <input id="name" type="text" class="input @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="Name" autocomplete="name" autofocus>
-
-        @error('name')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
-
-        <input id="email" type="email" class="input @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Email">
-        @error('email')
-        <span class="invalid-feedback" role="alert">
-            <strong>{{ $message }}</strong>
-        </span>
-        @enderror
-
-        <input id="password" type="password" class="input @error('password') is-invalid @enderror" name="password" placeholder="Password" autocomplete="new-password"> 
-        @error('password')
-        <span class="invalid-feedback" role="alert">
-            <strong>{{ $message }}</strong>
-        </span>
-        @enderror
-
-        <input id="password-confirm" type="password" class="input" name="password_confirmation" placeholder="Confirm Password" autocomplete="new-password"> 
-        @error('password')
-        <span class="invalid-feedback" role="alert">
-            <strong>{{ $message }}</strong>
-        </span>
-        @enderror
-        <span class="sub">Already have an account ? <a href="{{route('login')}}">Login</a></span>
-          <button>REGISTER</button>
-      </form>
-</div> --}}
-
-
- <!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
-  	<title>LOGIN</title>
+  	<title>REGISTER</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
-
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	
-	<link rel="stylesheet" href="{{asset('css/auth/login.css')}}">
+	<link rel="stylesheet" href="{{asset('css/auth/register.css')}}">
 
 	</head>
 	<body>
@@ -93,7 +45,27 @@
                               <strong>{{ $message }}</strong>
                           </span>
                           @enderror
-                      </div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gender" id="Male" value="Male">
+                                <label class="form-check-label" for="Male">
+                                    Male
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gender" id="Female" value="Female">
+                                <label class="form-check-label" for="Female">
+                                    Female
+                                </label>
+                            </div>
+                            @error('gender')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
 
 			      		<div class="form-group mb-3">
 			      			<label class="label" for="email">Email</label>
@@ -105,25 +77,41 @@
                             @enderror
                         </div>
                          
-		            <div class="form-group mb-3">
-		            	<label class="label" for="password">Password</label>
-		                <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Password" autocomplete="new-password">
-                        @error('password')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-		            </div>
+                        <div class="form-group mb-3">
+                            <label class="label" for="password">Password</label>
+                            <div class="input-group">
+                                <input type="password"
+                                    class="form-control @error('password') is-invalid @enderror" name="password"
+                                    id="password" placeholder="Password" autocomplete="new-password">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="fa fa-eye-slash" aria-hidden="true" id="toggle-password"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
 
                     <div class="form-group mb-3">
-		            	<label class="label" for="password-confirm">Confirm Password</label>
-		                <input type="password" class="form-control @error('password') is-invalid @enderror" name="password_confirmation" placeholder="Confirm Password" autocomplete="new-password">
+                        <label class="label" for="password_confirmation">Confirm Password</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" id="password_confirmation" name="password_confirmation" placeholder="Confirm Password" autocomplete="new-password">
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <i class="fa fa-eye-slash" aria-hidden="true" id="toggle-confirm-password"></i>
+                                </span>
+                            </div>
+                        </div>
                         @error('password')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
-		            </div>
+                    </div>
 
 		            <div class="form-group">
 		            	<button type="submit" class="form-control btn btn-primary rounded submit px-3">Register</button>
@@ -141,6 +129,10 @@
     <script src="{{asset('css/auth/js/popper.js')}}"></script>
     <script src="{{asset('css/authjs/bootstrap.min.js')}}"></script>
     <script src="{{asset('css/auth/js/main.js')}}"></script>
+    <script src="{{asset('js/password.js')}}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="{{asset('js/password.js')}}"></script>
+
 
 </body>
 </html>

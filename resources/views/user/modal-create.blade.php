@@ -21,6 +21,26 @@
                 </span>
               @enderror
             </div>
+
+            <div class="form-group mb-3">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gender" id="Male" value="Male">
+                <label class="form-check-label" for="Male">
+                  Male
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gender" id="Female" value="Female">
+                <label class="form-check-label" for="Female">
+                  Female
+                </label>
+              </div>
+              @error('gender')
+                <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+                </span>
+              @enderror
+            </div>
   
             <div class="form-group">
               <label for="email">Email:</label>
@@ -32,15 +52,23 @@
               @enderror
             </div>
   
-            <div class="form-group">
-              <label for="password">Password:</label>
-              <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" >
+            <div class="form-group mb-3">
+              <label class="label" for="password">Password</label>
+              <div class="input-group">
+                <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password" placeholder="Password">
+                <div class="input-group-append">
+                  <span class="input-group-text">
+                    <i class="fa fa-eye-slash" aria-hidden="true" id="toggle-password"></i>
+                  </span>
+                </div>
+              </div>
               @error('password')
-                <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-                </span>
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
               @enderror
             </div>
+
   
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -51,52 +79,6 @@
       </div>
     </div>
   </div>
-
-  <script>
-  $(function() {
-    // Listen for form submission
-    $('#createUserModal form').submit(function(event) {
-      // Prevent the default form submission behavior
-      event.preventDefault();
-  
-      // Submit the form using AJAX
-      $.ajax({
-        type: 'POST',
-        url: $(this).attr('action'),
-        data: $(this).serialize(),
-        success: function(data) {
-          // If the form is submitted successfully, close the modal
-          $('#createUserModal').modal('hide');
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-          // If there are validation errors, display them in the modal
-          if (jqXHR.status === 422) {
-            var errors = jqXHR.responseJSON.errors;
-            for (var field in errors) {
-              if (errors.hasOwnProperty(field)) {
-                var errorMessage = errors[field][0];
-                var fieldElement = $('#createUserModal').find('[name="' + field + '"]');
-                fieldElement.addClass('is-invalid');
-                fieldElement.after('<span class="invalid-feedback">' + errorMessage + '</span>');
-              }
-            }
-            // Remove the data-dismiss attribute from the modal's close button
-            $('#createUserModal .modal-footer button[type="button"]').removeAttr('data-dismiss');
-          }
-        }
-      });
-    });
-
-    // Reset the form and remove validation error messages when the modal is shown
-    $('#createUserModal').on('show.bs.modal', function() {
-      $('#createUserModal form')[0].reset();
-      $('#createUserModal .invalid-feedback').remove();
-      $('#createUserModal .is-invalid').removeClass('is-invalid');
-      $('#createUserModal .modal-footer button[type="button"]').attr('data-dismiss', 'modal');
-    });
-  });
-</script>
-
   
   
   
