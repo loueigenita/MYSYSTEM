@@ -28,4 +28,8 @@ Route::post('deleteSelected', [App\Http\Controllers\UserController::class, 'dele
 
 Route::resource('users', App\Http\Controllers\UserController::class);
 
+Route::get('/barcode-scanner', [App\Http\Controllers\BarcodeController::class, 'scanner'])->name('barcode-scanner');
+
+
+
 

@@ -24,34 +24,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
 
   <link rel="stylesheet" href="{{ asset('vendor/sweetalert2/sweetalert2.min.css') }}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quagga/dist/quagga.min.css">
   <script src="{{ asset('vendor/sweetalert2/sweetalert2.all.min.js') }}"></script>
-
-  <link rel="stylesheet" href="{{asset('css/loader.css')}}">
   
-
-
-
-
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
   <div class="wrapper">
-{{--   
-    <div class="pl">
-      <div class="pl__dot"></div>
-      <div class="pl__dot"></div>
-      <div class="pl__dot"></div>
-      <div class="pl__dot"></div>
-      <div class="pl__dot"></div>
-      <div class="pl__dot"></div>
-      <div class="pl__dot"></div>
-      <div class="pl__dot"></div>
-      <div class="pl__dot"></div>
-      <div class="pl__dot"></div>
-      <div class="pl__dot"></div>
-      <div class="pl__dot"></div>
-      <div class="pl__text">Loading…</div>
-    </div> --}}
-
     @include('layouts.partials.nav')
 
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -66,6 +44,7 @@
       <div class="sidebar">
         @include('layouts.partials.sidebar')
       </div>
+
     </aside>
 
       <div class="content-wrapper">
@@ -85,6 +64,7 @@
 
   
 </body>
+
 <script src="{{asset('js/password.js')}}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" ></script>
@@ -114,5 +94,19 @@
 <script src="{{asset('adminlte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('adminlte/dist/js/adminlte.js')}}"></script>
+<script src="{{asset('js/sort.js')}}"></script>
+<script src="{{asset('js/multidelete.js')}}"></script>
+
+
+<script src="{{asset('plugins/select2/js/select2.full.min.js')}}"></script>
+<script>
+  $(function () {
+    $('.select2').select2()
+  });
+</script>
+<!-- ChartJS -->
+<script src="{{asset('adminlte/plugins/chart.js/Chart.min.js')}}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="{{asset('adminlte/dist/js/pages/dashboard3.js')}}"></script>
 
 </html>

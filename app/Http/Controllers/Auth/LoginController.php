@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\JsonResponse;
+use Carbon\Carbon;
 
 class LoginController extends Controller
 {
@@ -44,5 +46,25 @@ class LoginController extends Controller
     {
         
         Alert::toast('Login Successfully', 'success')->autoClose(3000)->timerProgressBar()->width('20rem')->padding('1.5rem');
+    }
+
+    public function logout(Request $request)
+    {
+    $user = $request->user();
+        if ($user) {
+            $user->last_activity = null; // set last_active_at to null to mark the user as inactive
+            $user->logout_time = Carbon::now(); // save the logout time to the user's record
+            $user->save();
+        }
+
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return $request->wantsJson()
+            ? new JsonResponse([], 204)
+            : redirect('/');
     }
 }

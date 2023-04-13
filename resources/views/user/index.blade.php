@@ -4,6 +4,25 @@
 
 @include('user.modal-create')
 
+@if(auth()->check())
+    <?php auth()->user()->update(['last_activity' => now()]); ?>
+@endif
+
+<style>
+    span i{
+        position: relative;
+        left:-10px;
+        top: -8px;
+    }
+    .img-td{
+        position: relative;
+    }
+    .act{
+        position: relative;
+        right: 0.7rem;
+    }
+</style>
+
 <div class="content">
     <div class="content-header">
         <div class="container-fluid">
@@ -39,24 +58,39 @@
                             <div class="col-4 text-right">
                                 
                                 <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#createUserModal"><i class="fas fa-plus"></i></a>
-                                <button id="delete-selected" name="selected_users[]" type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Delete Selected</button>
+                                <button id="delete-selected" name="selected_users[]" type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                                
                             </div>
+                            
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" >
                         <div class="table-full-width table-responsive">
-                            <table class="table table-striped shadow text-center">
+                            <table class="table table-bordered table-striped shadow text-center">
                                 <thead class=" bg-dark text-light">
                                     <th scope="col">
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" id="select-all" name="selected_users[]">
                                             <label class="form-check-label" for="select-all">
-                                                Select All
+                                           
                                             </label>
                                         </div>
                                        
                                     </th>
-                                    <th scope="col">Name</th>
+                                    <th scope="col">Avatar</th>
+                                    
+                                    <th scope="col">
+                                        <a href="{{ route('users.index', ['sortField' => 'name', 'sortOrder' => $sortField === 'name' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
+                                            Name
+                                            @if ($sortField === 'name')
+                                                @if ($sortOrder === 'asc')
+                                                    <i class="fas fa-sort-up"></i>
+                                                @else
+                                                    <i class="fas fa-sort-down"></i>
+                                                @endif
+                                            @endif
+                                        </a>
+                                    </th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Gender</th>
                                     <th scope="col">Creation Date</th>
@@ -65,18 +99,46 @@
                                 <tbody>
                                     @foreach ($users as $user)
                                     <tr>
+                                      
                                         <td>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" name="selected_users[]" value="{{ $user->id }}">
                                             </div>
                                         </td>
+                                        {{-- <td>
+                                            <img src="{{ asset('../images/users/' . $user->image) }}" alt="Image" style="height: 40px; width: 40px; border-radius: 50%"> 
+                                        </td> --}}
+                                        <td>
+                                            @if($user->image)
+                                                <img src="{{ asset('../images/users/' . $user->image) }}" alt="Image" style="height: 40px; width: 40px; border-radius: 50%">
+                                            @else
+                                                <img src="{{ asset('../images/users/default.png') }}" alt="Default Image" style="height: 40px; width: 40px; border-radius: 50%">
+                                            @endif
+
+                                            <span>
+                                                @if ($user->last_activity && (now()->diffInMinutes($user->last_activity) < 120))
+                                                    <span class="text-success"><i class="fas fa-circle"></i></span>
+                                                @else
+                                                    <span class="text-danger"><i class="fas fa-circle"></i></span>
+                                                @endif
+                                                @if ($user->last_activity && (now()->diffInMinutes($user->last_activity) < 10))
+                                                     <br><small class="text-success act">Active</small>
+                                                    @elseif ($user->logout_time)
+                                                        <br><small>Active {{ Carbon\Carbon::parse($user->logout_time)->diffForHumans() }}</small>
+                                                    @endif
+                                            </span>
+
+                                        </td>
                                         <td>{{ $user->name }}</td>
-                                        <td><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></td>
+                                        <td>{{ $user->email }}</td>
                                         <td>{{ $user->gender }}</td>
                                         <td>{{ Carbon\Carbon::parse($user->created_at)->format('M d, Y') }}</td>
+                                       
                                         <td>
+                                            <a href="{{route('users.show', $user)}}" class="btn btn-sm btn-primary">
+                                                <i class="fas fa-folder"></i>
+                                            </a>
 
-                                          
                                             <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editUserModal{{$user->id}}">
                                                 <i class="fas fa-edit"></i>
                                             </a>
@@ -97,12 +159,13 @@
                                     @endforeach
                                 </tbody>
                             </table>
+
                             <div class="card-footer py-4">
                                 <div class="d-flex justify-content-center">
                                     {{ $users->links() }}
                                 </div>
-                              </div>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -110,6 +173,7 @@
         </div>
     </div>
 </div>
+
 
 <script>
     function deleteUser(id){
@@ -224,5 +288,4 @@ $('#delete-selected').click(function(){
     deleteSelected();
 });
 </script>
-
 @endsection

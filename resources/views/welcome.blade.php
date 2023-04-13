@@ -7,6 +7,7 @@
   <title>SYSTEM APPLICATION</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
   <link rel="stylesheet" href="{{asset('css/style.css')}}">
+  <link rel="stylesheet" href="{{asset('css/loader.css')}}">
   
 </head>
 
@@ -15,6 +16,7 @@
   <!-- Header -->
   <section id="header">
     <div class="header container">
+      
       <div class="nav-bar">
         <div class="brand">
           <a href="#hero">
@@ -51,8 +53,22 @@
         <h1>Welcome<span></span></h1>
         <a href="{{route('login')}}" type="button" class="cta">GET STARTED</a>
       </div>
+
+
+
+      <div class="loader">
+        <span style="--i: 1"></span>
+        <span style="--i: 2"></span>
+        <span style="--i: 3"></span>
+        <span style="--i: 4"></span>
+        <span style="--i: 5"></span>
+        <span style="--i: 6"></span>
+        <span style="--i: 7"></span>
+        <span style="--i: 8"></span>
+        <span style="--i: 9"></span>
+        <span style="--i: 10"></span>
+      </div>
     </div>
-    
   </section>
 
 </body>

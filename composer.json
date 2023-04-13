@@ -11,6 +11,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.2",
+        "picqer/php-barcode-generator": "^2.2",
         "realrashid/sweet-alert": "^6.0"
     },
     "require-dev": {

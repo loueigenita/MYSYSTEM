@@ -8,7 +8,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <form method="POST" action="{{ route('users.update', ['user' => $user->id]) }}">
+          <form method="POST" action="{{ route('users.update', ['user' => $user->id]) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="form-group">
@@ -48,23 +48,36 @@
               <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
               </span>
-            @enderror
+              @enderror
+            </div>
+
+            <div class="form-group mb-3">
+              <label class="label" for="image">Profile Image:</label>
+              <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror" value="{{ old('image', $user->image) }}">
+
+              @error('image')
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
+              @enderror
+            </div>
+          
             <div class="form-group">
                 <label for="password">New Password:</label>
-                <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" >
+                <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password">
                 @error('password')
                   <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                   </span>
                 @enderror
             </div>
+            
               
             <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="1" id="change-password" name="change_password">
-            <label class="form-check-label" for="change-password">
-                Leave password blank to keep current password
-            </label>
-            </div>
+              <input class="form-check-input" type="checkbox" value="1" id="change-password" name="change_password">
+              <label class="form-check-label" for="change-password">
+                  Leave password and image blank to keep current data.
+              </label>
             </div>
 
             <div class="modal-footer">

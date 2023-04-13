@@ -9,7 +9,7 @@
         </div>
         <div class="modal-body">
           <!-- Form to create a new user -->
-          <form method="POST" action="{{ route('users.store') }}">
+          <form method="POST" action="{{ route('users.store') }}" enctype="multipart/form-data">
             @csrf
   
             <div class="form-group">
@@ -53,7 +53,7 @@
             </div>
   
             <div class="form-group mb-3">
-              <label class="label" for="password">Password</label>
+              <label class="label" for="password">Password:</label>
               <div class="input-group">
                 <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password" placeholder="Password">
                 <div class="input-group-append">
@@ -63,6 +63,17 @@
                 </div>
               </div>
               @error('password')
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
+              @enderror
+            </div>
+
+            <div class="form-group mb-3">
+              <label class="label" for="image">Profile Image:</label>
+              <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror">
+
+              @error('image')
               <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
               </span>

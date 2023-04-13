@@ -14,4 +14,5 @@ class DashboardController extends Controller
             'users' => $users,
         ]);
     }
+
 }

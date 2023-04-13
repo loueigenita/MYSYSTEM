@@ -1,10 +1,16 @@
 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
     <div class="image">
-      <img src="{{asset('images/logo.png')}}" class="img-circle elevation-2" alt="User Image">
+    @if(Auth::user()->image)
+      <img src="{{ asset('images/users/'. Auth::user()->image )}}" style="height: 40px; width: 40px; border-radius: 50%" alt="User Image">
+    @else
+      <img src="{{ asset('images/users/default.png') }}" alt="Default Image" style="height: 40px; width: 40px; border-radius: 50%">
+    @endif
     </div>
+   
     <div class="info">
-      <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+      <a href="{{route('users.show', Auth::user())}}" class="d-block">{{ Auth::user()->name }}</a>
     </div>
+   
 </div>
 
   <!-- SidebarSearch Form -->
@@ -22,33 +28,37 @@
 
 <nav class="mt-2">
   <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-      <li class="nav-header text-warning">Admin Management</li>
 
-      <li class="nav-item">
-          <a href="{{ route('dashboard') }}" class="nav-link {{ request()->is('dashboard*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                  Dashboard
-              </p>
-          </a>
-      </li>
+    <li class="nav-header text-primary  ">Admin Management</li>
 
-      <li class="nav-item">
-          <a href="{{route('profile')}}" class="nav-link {{ request()->is('profile*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-scroll"></i>
-              <p>
-                  Profile
-              </p>
-          </a>
-      </li>
-      <li class="nav-item">
+    <li class="nav-item">
+        <a href="{{ route('dashboard') }}" class="nav-link {{ request()->is('dashboard*') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-tachometer-alt text-warning"></i>
+            <p>
+                Dashboard
+            </p>
+        </a>
+    </li>
+    <li class="nav-item">
         <a href="{{url('users')}}" class="nav-link {{ request()->is('users*') ? 'active' : '' }}">
-            <i class="nav-icon fas fa-users"></i>
+            <i class="nav-icon fas fa-users text-warning"></i>
             <p>
                 Users
             </p>
         </a>
     </li>
+    
+    <li class="nav-item">
+        <a href="{{ route('barcode-scanner') }}" class="nav-link {{ request()->is('barcode-scanner*') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-barcode text-warning"></i>
+            <p>
+                Barcode
+            </p>
+        </a>
+    </li>
+            
+
+
   </ul>
 </nav>
 

@@ -20,6 +20,10 @@ return new class extends Migration
             $table->string('gender');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+
+            $table->string('image')->nullable();
+
+            $table->enum('status', ['online', 'offline'])->default('offline');
             $table->rememberToken();
             $table->timestamps();
         });
